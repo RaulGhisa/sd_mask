@@ -1,7 +1,7 @@
 model:
   path: models/
   weights: new     # new, last, coco, imagenet or custom path
-  epochs: 20       # number of epochs to train for
+  epochs: 10       # number of epochs to train for
   settings:
     name: my_model
     image_shape: [512,512]
@@ -10,7 +10,7 @@ model:
     backbone: resnet35
     max_gt_instances: 20
     gpu_count: 1
-    images_per_gpu: 5
+    images_per_gpu: 3
     learning_rate: 0.01
 
 dataset:

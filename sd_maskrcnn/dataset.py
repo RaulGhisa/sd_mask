@@ -91,6 +91,7 @@ class ImageDataset(Dataset):
 
     # CHANGE HERE - METHOD OVERRIDE
     def load_image(self, image_id):
+        print("loading image")
         # loads image from path
         if 'numpy' in self.images:
             image = np.load(self.image_info[image_id]['path']).squeeze()
