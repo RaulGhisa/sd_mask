@@ -89,6 +89,7 @@ class ImageDataset(Dataset):
             image = image[::-1,::-1,:]
         return image
 
+    # CHANGE HERE - METHOD OVERRIDE
     def load_image(self, image_id):
         # loads image from path
         if 'numpy' in self.images:
@@ -103,6 +104,7 @@ class ImageDataset(Dataset):
         elif self._channels == 1 and image.ndim == 3:
             image = image[:,:,0,np.newaxis]
         elif self._channels == 3 and image.ndim == 3 and image.shape[-1] == 1:
+            print("loading IMAGES depth")
             image = skimage.color.gray2rgb(image)
         elif self._channels == 4 and image.shape[-1] == 3:
             concat_image = np.concatenate([image, image[:,:,0:1]], axis=2)

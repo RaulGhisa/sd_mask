@@ -19,6 +19,7 @@ dataset:
   val_indices: test_indices.npy
   images: depth_ims
   masks: modal_segmasks
+  objects: color_ims
 
 # name of the config file to save (within the dataset folder)
 # note that this will be overwritten between multiple runs so
