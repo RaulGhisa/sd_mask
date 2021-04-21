@@ -52,6 +52,7 @@ class ImageDataset(Dataset):
         self.dataset_config = config['dataset']
         self.base_path = config['dataset']['path']
         self.images = config['dataset']['images']
+        self.images_col = config['dataset']['colored']
         self.masks = config['dataset']['masks']
 
         self._channels = config['model']['settings']['image_channel_count']
@@ -94,13 +95,20 @@ class ImageDataset(Dataset):
 
     # CHANGE HERE - METHOD OVERRIDE
     def load_image(self, image_id):
-        print("loading image")
         # loads image from path
         if 'numpy' in self.images:
             image = np.load(self.image_info[image_id]['path']).squeeze()
         else:
             image = skimage.io.imread(self.image_info[image_id]['path'])
-        
+
+            p_col = os.path.join(self.base_path, self.images_col, 'image_{:06d}.png'.format(self.image_info[image_id]['id']))
+            image_col = skimage.io.imread(p_col)
+
+            image[:, :, 0] = image_col[:, :, 0]
+
+            skimage.io.imshow(image)
+            skimage.io.show()
+
         if self._channels < 4 and image.shape[-1] == 4 and image.ndim == 3:
             image = image[...,:3]
         if self._channels == 1 and image.ndim == 2:
@@ -108,7 +116,6 @@ class ImageDataset(Dataset):
         elif self._channels == 1 and image.ndim == 3:
             image = image[:,:,0,np.newaxis]
         elif self._channels == 3 and image.ndim == 3 and image.shape[-1] == 1:
-            print("loading IMAGES depth")
             image = skimage.color.gray2rgb(image)
         elif self._channels == 4 and image.shape[-1] == 3:
             concat_image = np.concatenate([image, image[:,:,0:1]], axis=2)

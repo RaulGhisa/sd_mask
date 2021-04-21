@@ -10,16 +10,16 @@ model:
     backbone: resnet35
     max_gt_instances: 20
     gpu_count: 1
-    images_per_gpu: 3
+    images_per_gpu: 1
     learning_rate: 0.01
 
 dataset:
-  path: datasets/wisdom/wisdom-sim/
+  path: datasets/data_12k/images
   train_indices: train_indices.npy
   val_indices: test_indices.npy
   images: depth_ims
-  masks: modal_segmasks
-  objects: color_ims
+  masks: semantic_masks
+  colored: color_ims
 
 # name of the config file to save (within the dataset folder)
 # note that this will be overwritten between multiple runs so
