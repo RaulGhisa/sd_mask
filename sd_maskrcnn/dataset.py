@@ -93,7 +93,6 @@ class ImageDataset(Dataset):
             image = image[::-1,::-1,:]
         return image
 
-    # CHANGE HERE - METHOD OVERRIDE
     def load_image(self, image_id):
         # loads image from path
         if 'numpy' in self.images:
@@ -105,9 +104,6 @@ class ImageDataset(Dataset):
             image_col = skimage.io.imread(p_col)
 
             image[:, :, 0] = image_col[:, :, 0]
-
-            skimage.io.imshow(image)
-            skimage.io.show()
 
         if self._channels < 4 and image.shape[-1] == 4 and image.ndim == 3:
             image = image[...,:3]
